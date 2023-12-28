@@ -7,11 +7,10 @@ import com.example.todoapplication.domain.todos.dto.UpdateTodoRequest
 import com.example.todoapplication.domain.todos.model.Todo
 import com.example.todoapplication.domain.todos.model.toResponse
 import com.example.todoapplication.domain.todos.repository.TodoRepository
-import org.springframework.data.domain.Sort
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
-import java.time.LocalDate
+import java.time.LocalDateTime
 
 @Service
 class TodoServiceImpl(private val todoRepository: TodoRepository): TodoService {
@@ -32,7 +31,7 @@ class TodoServiceImpl(private val todoRepository: TodoRepository): TodoService {
                 userName = request.userName,
                 title = request.title,
                 detail = request.detail,
-                dateCreated = LocalDate.now(),
+                dateCreated = LocalDateTime.now(),
                 )
         ).toResponse()
     }

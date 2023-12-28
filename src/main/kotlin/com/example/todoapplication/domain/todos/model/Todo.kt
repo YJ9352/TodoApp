@@ -2,7 +2,7 @@ package com.example.todoapplication.domain.todos.model
 
 import com.example.todoapplication.domain.todos.dto.TodoResponse
 import jakarta.persistence.*
-import java.time.LocalDate
+import java.time.LocalDateTime
 
 @Entity
 @Table(name = "todos")
@@ -18,7 +18,7 @@ class Todo(
     var detail: String? = null,
 
     @Column(name = "datecreated")
-    val dateCreated: LocalDate = LocalDate.now()
+    val dateCreated: LocalDateTime = LocalDateTime.now()
 
 ) {
 
