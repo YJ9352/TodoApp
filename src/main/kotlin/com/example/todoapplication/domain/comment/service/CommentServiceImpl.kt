@@ -7,7 +7,6 @@ import com.example.todoapplication.domain.comment.model.Comment
 import com.example.todoapplication.domain.comment.model.toResponse
 import com.example.todoapplication.domain.comment.repository.CommentRepository
 import com.example.todoapplication.domain.exception.ModelNotFoundException
-import org.springdoc.core.service.RequestBodyService
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional

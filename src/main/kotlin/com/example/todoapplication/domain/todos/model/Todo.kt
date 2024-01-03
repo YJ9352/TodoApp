@@ -18,7 +18,10 @@ class Todo(
     var detail: String? = null,
 
     @Column(name = "datecreated")
-    val dateCreated: LocalDateTime = LocalDateTime.now()
+    val dateCreated: LocalDateTime = LocalDateTime.now(),
+
+    @Column(name = "status")
+    var status: TodoStatus = TodoStatus.FALSE
 
 ) {
 
@@ -33,6 +36,7 @@ fun Todo.toResponse(): TodoResponse {
         userName = userName,
         title = title,
         detail = detail,
-        dateCreated = dateCreated
+        dateCreated = dateCreated,
+        status = false
     )
 }

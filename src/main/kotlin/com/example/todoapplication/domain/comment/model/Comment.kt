@@ -28,6 +28,5 @@ fun Comment.toResponse(): CommentResponse {
         commentName = commentName,
         commentPassword = commentPassword,
         commentContents = commentContents
-
     )
 }
