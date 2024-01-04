@@ -20,6 +20,7 @@ class CommentController(
     private val commentService: CommentServiceImpl
 ) {
 
+    // 전체조회
     @GetMapping()
     fun getCommentList():ResponseEntity<List<CommentResponse>> {
         return ResponseEntity
@@ -27,6 +28,7 @@ class CommentController(
             .body(commentService.getAllCommentList())
     }
 
+    // 개별조회
     @GetMapping("/{commentId}")
     fun getComment(@PathVariable commentId: Long): ResponseEntity<CommentResponse> {
         return ResponseEntity
@@ -34,6 +36,7 @@ class CommentController(
             .body(commentService.getCommentById(commentId))
     }
 
+    // 댓글 작성
     @PostMapping()
     fun createComment(@PathVariable todoId: Long,
                       @RequestBody @Valid createCommentRequest: CreateCommentRequest
@@ -43,6 +46,7 @@ class CommentController(
             .body(commentService.createComment(todoId, createCommentRequest))
     }
 
+    // 댓글 수정
     @PutMapping("/{commentId}")
     fun updateComment(
         @PathVariable commentId: Long,
@@ -53,6 +57,7 @@ class CommentController(
             .body(commentService.updateComment(commentId, updateCommentRequest))
     }
 
+    // 댓글 삭제
     @DeleteMapping("/{commentId}")
     fun deleteComment(@PathVariable commentId: Long,
                       @RequestBody @Valid DeleteCommentRequest: DeleteCommentRequest

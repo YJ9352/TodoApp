@@ -18,15 +18,18 @@ class CommentServiceImpl(
     private val todoRepository: TodoRepository,
 ): CommentService {
 
+    // 댓글 전체조회
     override fun getAllCommentList(): List<CommentResponse> {
         return commentRepository.findAll().map { it.toResponse() }
     }
 
+    // 댓글 개별조회
     override fun getCommentById(commentId: Long): CommentResponse {
         val comment = commentRepository.findByIdOrNull(commentId) ?: throw ModelNotFoundException(commentId)
         return comment.toResponse()
     }
 
+    // 댓글 작성 (선택한 할 일 저장유무 확인)
     @Transactional
     override fun createComment(todoId: Long, request: CreateCommentRequest): CommentReturn {
         val todo = todoRepository.findById(todoId)
@@ -46,13 +49,11 @@ class CommentServiceImpl(
         return resComment
     }
 
+    // 댓글 수정 (이름, 비밀번호 저장값과 일치시 수정)
     @Transactional
     override fun updateComment(commentId: Long, request: UpdateCommentRequest): CommentReturn {
         val comment = commentRepository.findByIdOrNull(commentId) ?: throw ModelNotFoundException(commentId)
         val (commentName, commentPassword, commentContents) = request
-
-//        comment.commentName = commentName
-//        comment.commentPassword = commentPassword
 
         if (comment.commentPassword == request.commentPassword && comment.commentName == request.commentName) {
             comment.commentContents = commentContents
@@ -64,6 +65,7 @@ class CommentServiceImpl(
         }
     }
 
+    // 댓글 삭제 (이름, 비밀번호 저장값과 일치시 수정)
     @Transactional
     override fun deleteComment(commentId: Long, request: DeleteCommentRequest) {
         val comment = commentRepository.findByIdOrNull(commentId) ?: throw ModelNotFoundException(commentId)

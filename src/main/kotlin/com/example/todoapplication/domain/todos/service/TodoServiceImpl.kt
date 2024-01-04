@@ -16,15 +16,18 @@ import java.time.LocalDateTime
 @Service
 class TodoServiceImpl(private val todoRepository: TodoRepository): TodoService {
 
+    // 투두 리스트 전체조회(내림차순)
     override fun getAllTodoList(): List<TodoResponse> {
         return todoRepository.findAll().sortedByDescending { it.dateCreated }.map { it.toResponse() }
     }
 
+    // 투두리스트 개별조회
     override fun getTodoById(todoId: Long): TodoResponse {
         val todo = todoRepository.findByIdOrNull(todoId) ?: throw ModelNotFoundException(todoId)
         return todo.toResponse()
     }
 
+    // 투두리스트 작성
     @Transactional
     override fun createTodo(request: CreateTodoRequest): TodoResponse {
         return todoRepository.save(
@@ -38,6 +41,7 @@ class TodoServiceImpl(private val todoRepository: TodoRepository): TodoService {
         ).toResponse()
     }
 
+    // 투두리스트 수정
     @Transactional
     override fun updateTodo(todoId: Long, request: UpdateTodoRequest): TodoResponse {
         val todo = todoRepository.findByIdOrNull(todoId) ?: throw ModelNotFoundException(todoId)
@@ -50,6 +54,7 @@ class TodoServiceImpl(private val todoRepository: TodoRepository): TodoService {
         return todoRepository.save(todo).toResponse()
     }
 
+    // 투두리스트 삭제
     @Transactional
     override fun deleteTodo(todoId: Long) {
         val todo = todoRepository.findByIdOrNull(todoId) ?: throw ModelNotFoundException(todoId)
