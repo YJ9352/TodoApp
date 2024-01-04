@@ -1,6 +1,8 @@
 package com.example.todoapplication.domain.comment.model
 
 import com.example.todoapplication.domain.comment.dto.CommentResponse
+import com.example.todoapplication.domain.todos.dto.TodoResponse
+import com.example.todoapplication.domain.todos.model.Todo
 import jakarta.persistence.*
 
 @Entity
@@ -15,10 +17,16 @@ class Comment(
 
     @Column(name = "commentcontents")
     var commentContents: String,
+
+    @ManyToOne
+    @JoinColumn(name = "todoid")
+    var todo: Todo
+
 ) {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "commentid")
     var commentid: Long? = null
 }
 
@@ -27,6 +35,6 @@ fun Comment.toResponse(): CommentResponse {
         commentId = commentid!!,
         commentName = commentName,
         commentPassword = commentPassword,
-        commentContents = commentContents
+        commentContents = commentContents,
     )
 }

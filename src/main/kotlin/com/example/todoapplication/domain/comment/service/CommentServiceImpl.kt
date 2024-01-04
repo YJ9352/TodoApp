@@ -1,12 +1,15 @@
 package com.example.todoapplication.domain.comment.service
 
 import com.example.todoapplication.domain.comment.dto.CommentResponse
+import com.example.todoapplication.domain.comment.dto.CommentReturn
 import com.example.todoapplication.domain.comment.dto.CreateCommentRequest
 import com.example.todoapplication.domain.comment.dto.UpdateCommentRequest
 import com.example.todoapplication.domain.comment.model.Comment
 import com.example.todoapplication.domain.comment.model.toResponse
 import com.example.todoapplication.domain.comment.repository.CommentRepository
 import com.example.todoapplication.domain.exception.ModelNotFoundException
+import com.example.todoapplication.domain.todos.model.Todo
+import com.example.todoapplication.domain.todos.repository.TodoRepository
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -14,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional
 @Service
 class CommentServiceImpl(
     private val commentRepository: CommentRepository,
+    private val todoRepository: TodoRepository,
 ): CommentService {
 
     override fun getAllCommentList(): List<CommentResponse> {
@@ -26,16 +30,25 @@ class CommentServiceImpl(
         return comment.toResponse()
     }
 
-    // 여기서부터 비밀번호 대조
     @Transactional
-    override fun createComment(request: CreateCommentRequest): CommentResponse {
-        return commentRepository.save(
-            Comment(
-                commentName = request.commentName,
-                commentPassword = request.commentPassword,
-                commentContents = request.commentContents,
+    override fun createComment(todoId: Long, request: CreateCommentRequest): CommentReturn {
+        val todo = todoRepository.findById(todoId)
+        val resComment = CommentReturn(commentName = request.commentName, commentContents = request.commentContents)
+        if (todo.isPresent) {
+            commentRepository.save(
+                Comment(
+                    commentName = request.commentName,
+                    commentPassword = request.commentPassword,
+                    commentContents = request.commentContents,
+                    todo = todo.get()
                 )
-        ).toResponse()
+            ).toResponse()
+        } else {
+            throw ModelNotFoundException(todoId)
+        }
+
+        return resComment
+
     }
 
     @Transactional
