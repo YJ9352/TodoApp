@@ -2,10 +2,10 @@ package com.example.todoapplication.domain.todos.controller
 
 import com.example.todoapplication.domain.todos.dto.CreateTodoRequest
 import com.example.todoapplication.domain.todos.dto.TodoResponse
+import com.example.todoapplication.domain.todos.dto.UpdateStatus
 import com.example.todoapplication.domain.todos.dto.UpdateTodoRequest
 import com.example.todoapplication.domain.todos.model.TodoStatus
 import com.example.todoapplication.domain.todos.service.TodoService
-import org.springframework.context.annotation.Primary
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.DeleteMapping
@@ -70,10 +70,10 @@ class TodoController(
 
     // 할일 완료처리 여부
     @PatchMapping("/{todoId}")
-    fun updateStatus(@PathVariable todoId: Long): ResponseEntity<Unit> {
-        todoService.updateStatus(todoId, TodoStatus.TRUE)
+    fun updateStatus(@PathVariable todoId: Long,
+                     @RequestBody status: TodoStatus): ResponseEntity<Boolean> {
         return ResponseEntity
             .status(HttpStatus.OK)
-            .build()
+            .body(todoService.updateStatus(todoId, UpdateStatus(true)))
     }
 }

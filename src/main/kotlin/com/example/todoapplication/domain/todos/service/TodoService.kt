@@ -2,8 +2,8 @@ package com.example.todoapplication.domain.todos.service
 
 import com.example.todoapplication.domain.todos.dto.CreateTodoRequest
 import com.example.todoapplication.domain.todos.dto.TodoResponse
+import com.example.todoapplication.domain.todos.dto.UpdateStatus
 import com.example.todoapplication.domain.todos.dto.UpdateTodoRequest
-import com.example.todoapplication.domain.todos.model.TodoStatus
 
 interface TodoService {
 
@@ -17,5 +17,5 @@ interface TodoService {
 
     fun deleteTodo(todoId: Long)
 
-    fun updateStatus(todoId: Long, status: TodoStatus): TodoResponse
+    fun updateStatus(todoId: Long, request: UpdateStatus): Boolean
 }

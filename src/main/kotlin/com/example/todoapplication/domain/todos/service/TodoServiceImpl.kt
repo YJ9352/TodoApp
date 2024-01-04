@@ -3,11 +3,9 @@ package com.example.todoapplication.domain.todos.service
 import com.example.todoapplication.domain.exception.ModelNotFoundException
 import com.example.todoapplication.domain.todos.dto.CreateTodoRequest
 import com.example.todoapplication.domain.todos.dto.TodoResponse
+import com.example.todoapplication.domain.todos.dto.UpdateStatus
 import com.example.todoapplication.domain.todos.dto.UpdateTodoRequest
 import com.example.todoapplication.domain.todos.model.Todo
-import com.example.todoapplication.domain.todos.model.TodoStatus
-import com.example.todoapplication.domain.todos.model.TodoStatus.FALSE
-import com.example.todoapplication.domain.todos.model.TodoStatus.TRUE
 import com.example.todoapplication.domain.todos.model.toResponse
 import com.example.todoapplication.domain.todos.repository.TodoRepository
 import org.springframework.data.repository.findByIdOrNull
@@ -35,7 +33,7 @@ class TodoServiceImpl(private val todoRepository: TodoRepository): TodoService {
                 title = request.title,
                 detail = request.detail,
                 dateCreated = LocalDateTime.now(),
-                status = FALSE
+                status = false
                 )
         ).toResponse()
     }
@@ -60,11 +58,12 @@ class TodoServiceImpl(private val todoRepository: TodoRepository): TodoService {
 
     // 할일 완료처리 여부
     @Transactional
-    override fun updateStatus(todoId: Long, status: TodoStatus): TodoResponse {
+    override fun updateStatus(todoId: Long, request: UpdateStatus): Boolean {
         val todo = todoRepository.findByIdOrNull(todoId) ?: throw ModelNotFoundException(todoId)
-        val status = status
+        val (status) = request
 
         todo.status = status
-        return  todoRepository.save(todo).toResponse()
+
+        return if (!status) true else false
     }
 }

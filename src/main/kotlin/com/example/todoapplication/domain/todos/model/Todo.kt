@@ -2,6 +2,7 @@ package com.example.todoapplication.domain.todos.model
 
 import com.example.todoapplication.domain.todos.dto.TodoResponse
 import jakarta.persistence.*
+import java.lang.Boolean.FALSE
 import java.time.LocalDateTime
 
 @Entity
@@ -21,13 +22,14 @@ class Todo(
     val dateCreated: LocalDateTime = LocalDateTime.now(),
 
     @Column(name = "status")
-    var status: TodoStatus = TodoStatus.FALSE
+    var status: Boolean = FALSE
 
 ) {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Long? = null
+
 }
 
 fun Todo.toResponse(): TodoResponse {
@@ -37,6 +39,6 @@ fun Todo.toResponse(): TodoResponse {
         title = title,
         detail = detail,
         dateCreated = dateCreated,
-        status = false
+        status = status
     )
 }
