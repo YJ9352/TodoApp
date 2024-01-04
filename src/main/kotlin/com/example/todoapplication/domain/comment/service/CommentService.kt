@@ -13,7 +13,7 @@ interface CommentService {
 
     fun createComment(todoId: Long, request: CreateCommentRequest): CommentReturn
 
-    fun updateComment(commentId: Long, request: UpdateCommentRequest): CommentResponse
+    fun updateComment(commentId: Long, request: UpdateCommentRequest): CommentReturn
 
     fun deleteComment(commentId: Long)
 }

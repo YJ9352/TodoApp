@@ -1,6 +1,7 @@
 package com.example.todoapplication.domain.comment.model
 
 import com.example.todoapplication.domain.comment.dto.CommentResponse
+import com.example.todoapplication.domain.comment.dto.CommentReturn
 import com.example.todoapplication.domain.todos.dto.TodoResponse
 import com.example.todoapplication.domain.todos.model.Todo
 import jakarta.persistence.*
@@ -36,5 +37,12 @@ fun Comment.toResponse(): CommentResponse {
         commentName = commentName,
         commentPassword = commentPassword,
         commentContents = commentContents,
+    )
+}
+
+fun Comment.toRes(): CommentReturn {
+    return CommentReturn(
+        commentName = this.commentName,
+        commentContents = this.commentContents
     )
 }

@@ -41,7 +41,6 @@ class CommentController(
     fun createComment(@PathVariable todoId: Long,
                       @RequestBody @Valid createCommentRequest: CreateCommentRequest
     ): ResponseEntity<CommentReturn> {
-
         return ResponseEntity
             .status(HttpStatus.CREATED)
             .body(commentService.createComment(todoId, createCommentRequest))
@@ -50,8 +49,8 @@ class CommentController(
     @PutMapping("/{commentId}")
     fun updateComment(
         @PathVariable commentId: Long,
-        @RequestBody updateCommentRequest: UpdateCommentRequest
-    ): ResponseEntity<CommentResponse> {
+        @RequestBody @Valid updateCommentRequest: UpdateCommentRequest
+    ): ResponseEntity<CommentReturn> {
         return ResponseEntity
             .status(HttpStatus.OK)
             .body(commentService.updateComment(commentId, updateCommentRequest))

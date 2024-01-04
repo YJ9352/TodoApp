@@ -5,10 +5,11 @@ import com.example.todoapplication.domain.comment.dto.CommentReturn
 import com.example.todoapplication.domain.comment.dto.CreateCommentRequest
 import com.example.todoapplication.domain.comment.dto.UpdateCommentRequest
 import com.example.todoapplication.domain.comment.model.Comment
+import com.example.todoapplication.domain.comment.model.toRes
 import com.example.todoapplication.domain.comment.model.toResponse
 import com.example.todoapplication.domain.comment.repository.CommentRepository
+import com.example.todoapplication.domain.exception.GlobalExceptionHandler
 import com.example.todoapplication.domain.exception.ModelNotFoundException
-import com.example.todoapplication.domain.todos.model.Todo
 import com.example.todoapplication.domain.todos.repository.TodoRepository
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
@@ -24,7 +25,6 @@ class CommentServiceImpl(
         return commentRepository.findAll().map { it.toResponse() }
     }
 
-    // todo와 연결된 항목 보이게 하기
     override fun getCommentById(commentId: Long): CommentResponse {
         val comment = commentRepository.findByIdOrNull(commentId) ?: throw ModelNotFoundException(commentId)
         return comment.toResponse()
@@ -46,21 +46,25 @@ class CommentServiceImpl(
         } else {
             throw ModelNotFoundException(todoId)
         }
-
         return resComment
-
     }
 
     @Transactional
-    override fun updateComment(commentId: Long, request: UpdateCommentRequest): CommentResponse {
+    override fun updateComment(commentId: Long, request: UpdateCommentRequest): CommentReturn {
         val comment = commentRepository.findByIdOrNull(commentId) ?: throw ModelNotFoundException(commentId)
         val (commentName, commentPassword, commentContents) = request
 
-        comment.commentName = commentName
-        comment.commentPassword = commentPassword
-        comment.commentContents = commentContents
+//        comment.commentName = commentName
+//        comment.commentPassword = commentPassword
 
-        return commentRepository.save(comment).toResponse()
+        if (comment.commentPassword == request.commentPassword && comment.commentName == request.commentName) {
+            comment.commentContents = commentContents
+
+            return comment.toRes()
+
+        } else {
+            throw RuntimeException("Invalid comment credentials")
+        }
     }
 
     @Transactional
