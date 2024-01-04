@@ -1,9 +1,6 @@
 package com.example.todoapplication.domain.comment.controller
 
-import com.example.todoapplication.domain.comment.dto.CommentResponse
-import com.example.todoapplication.domain.comment.dto.CommentReturn
-import com.example.todoapplication.domain.comment.dto.CreateCommentRequest
-import com.example.todoapplication.domain.comment.dto.UpdateCommentRequest
+import com.example.todoapplication.domain.comment.dto.*
 import com.example.todoapplication.domain.comment.service.CommentServiceImpl
 import jakarta.validation.Valid
 import org.springframework.http.HttpStatus
@@ -57,8 +54,10 @@ class CommentController(
     }
 
     @DeleteMapping("/{commentId}")
-    fun deleteComment(@PathVariable commentId: Long): ResponseEntity<Unit> {
-        commentService.deleteComment(commentId)
+    fun deleteComment(@PathVariable commentId: Long,
+                      @RequestBody @Valid DeleteCommentRequest: DeleteCommentRequest
+    ): ResponseEntity<Unit> {
+        commentService.deleteComment(commentId, DeleteCommentRequest)
         return ResponseEntity
             .status(HttpStatus.NO_CONTENT)
             .build()

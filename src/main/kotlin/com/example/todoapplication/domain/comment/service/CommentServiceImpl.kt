@@ -1,9 +1,6 @@
 package com.example.todoapplication.domain.comment.service
 
-import com.example.todoapplication.domain.comment.dto.CommentResponse
-import com.example.todoapplication.domain.comment.dto.CommentReturn
-import com.example.todoapplication.domain.comment.dto.CreateCommentRequest
-import com.example.todoapplication.domain.comment.dto.UpdateCommentRequest
+import com.example.todoapplication.domain.comment.dto.*
 import com.example.todoapplication.domain.comment.model.Comment
 import com.example.todoapplication.domain.comment.model.toRes
 import com.example.todoapplication.domain.comment.model.toResponse
@@ -68,8 +65,13 @@ class CommentServiceImpl(
     }
 
     @Transactional
-    override fun deleteComment(commentId: Long) {
+    override fun deleteComment(commentId: Long, request: DeleteCommentRequest) {
         val comment = commentRepository.findByIdOrNull(commentId) ?: throw ModelNotFoundException(commentId)
-        commentRepository.delete(comment)
+
+        if (comment.commentPassword == request.commentPassword && comment.commentName == request.commentName) {
+            commentRepository.delete(comment)
+        } else {
+            throw RuntimeException("Invalid comment credentials")
+        }
     }
 }

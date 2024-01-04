@@ -2,7 +2,6 @@ package com.example.todoapplication.domain.comment.model
 
 import com.example.todoapplication.domain.comment.dto.CommentResponse
 import com.example.todoapplication.domain.comment.dto.CommentReturn
-import com.example.todoapplication.domain.todos.dto.TodoResponse
 import com.example.todoapplication.domain.todos.model.Todo
 import jakarta.persistence.*
 
