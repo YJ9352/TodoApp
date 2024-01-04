@@ -32,12 +32,12 @@ class TodoController(
             .body(todoService.getAllTodoList())
     }
 
-    // 개별조회
+    // 개별조회 (연관댓글 추가)
     @GetMapping("/{todoId}")
-    fun getTodo(@PathVariable todoId: Long): ResponseEntity<TodoResponse> {
+    fun getTodo(@PathVariable todoId: Long, commentId: Long): ResponseEntity<TodoResponse> {
         return ResponseEntity
             .status(HttpStatus.OK)
-            .body(todoService.getTodoById(todoId))
+            .body(todoService.getTodoById(todoId, commentId))
     }
 
     // 글 작성

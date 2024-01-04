@@ -1,7 +1,7 @@
 package com.example.todoapplication.domain.comment.model
 
 import com.example.todoapplication.domain.comment.dto.CommentResponse
-import com.example.todoapplication.domain.comment.dto.CommentReturn
+import com.example.todoapplication.domain.comment.dto.CommentReturnResponse
 import com.example.todoapplication.domain.todos.model.Todo
 import jakarta.persistence.*
 
@@ -20,7 +20,7 @@ class Comment(
 
     @ManyToOne
     @JoinColumn(name = "todoid")
-    var todo: Todo
+    var todo: Todo,
 
 ) {
 
@@ -39,8 +39,8 @@ fun Comment.toResponse(): CommentResponse {
     )
 }
 
-fun Comment.toRes(): CommentReturn {
-    return CommentReturn(
+fun Comment.toRes(): CommentReturnResponse {
+    return CommentReturnResponse(
         commentName = this.commentName,
         commentContents = this.commentContents
     )

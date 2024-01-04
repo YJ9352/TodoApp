@@ -11,7 +11,7 @@ interface TodoService {
     fun getAllTodoList(): List<TodoResponse>
 
     // 투두리스트 개별조회
-    fun getTodoById(todoId: Long): TodoResponse
+    fun getTodoById(todoId: Long, commentId: Long): TodoResponse
 
     // 투두리스트 작성
     fun createTodo(request: CreateTodoRequest): TodoResponse

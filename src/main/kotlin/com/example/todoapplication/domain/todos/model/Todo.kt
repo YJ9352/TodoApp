@@ -1,5 +1,7 @@
 package com.example.todoapplication.domain.todos.model
 
+import com.example.todoapplication.domain.comment.model.Comment
+import com.example.todoapplication.domain.comment.model.toRes
 import com.example.todoapplication.domain.todos.dto.TodoResponse
 import jakarta.persistence.*
 import java.lang.Boolean.FALSE
@@ -22,7 +24,10 @@ class Todo(
     val dateCreated: LocalDateTime = LocalDateTime.now(),
 
     @Column(name = "status")
-    var status: Boolean = FALSE
+    var status: Boolean = FALSE,
+
+    @OneToMany(mappedBy = "todo", cascade = [CascadeType.ALL])
+    var comments: MutableList<Comment> = mutableListOf()
 
 ) {
 
@@ -40,6 +45,7 @@ fun Todo.toResponse(): TodoResponse {
         title = title,
         detail = detail,
         dateCreated = dateCreated,
-        status = status
+        status = status,
+        comments = comments.map { it.toRes() }
     )
 }

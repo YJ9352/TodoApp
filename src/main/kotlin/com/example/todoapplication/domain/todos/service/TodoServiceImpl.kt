@@ -1,5 +1,8 @@
 package com.example.todoapplication.domain.todos.service
 
+import com.example.todoapplication.domain.comment.model.Comment
+import com.example.todoapplication.domain.comment.model.toRes
+import com.example.todoapplication.domain.comment.repository.CommentRepository
 import com.example.todoapplication.domain.exception.ModelNotFoundException
 import com.example.todoapplication.domain.todos.dto.CreateTodoRequest
 import com.example.todoapplication.domain.todos.dto.TodoResponse
@@ -14,17 +17,33 @@ import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDateTime
 
 @Service
-class TodoServiceImpl(private val todoRepository: TodoRepository): TodoService {
+class TodoServiceImpl(
+    private val todoRepository: TodoRepository,
+    private val commentRepository: CommentRepository
+): TodoService {
 
     // 투두 리스트 전체조회(내림차순)
     override fun getAllTodoList(): List<TodoResponse> {
         return todoRepository.findAll().sortedByDescending { it.dateCreated }.map { it.toResponse() }
     }
 
-    // 투두리스트 개별조회
-    override fun getTodoById(todoId: Long): TodoResponse {
+    // 투두리스트 개별조회 (연관댓글 추가)
+    @Transactional
+    override fun getTodoById(todoId: Long, commentId: Long): TodoResponse {
         val todo = todoRepository.findByIdOrNull(todoId) ?: throw ModelNotFoundException(todoId)
-        return todo.toResponse()
+
+        val comments: List<Comment> = commentRepository.findByTodoId(todoId)
+        todo.comments.addAll(comments)
+
+        return TodoResponse(
+            id = todo.id!!,
+            userName = todo.userName,
+            title = todo.title,
+            detail = todo.detail,
+            dateCreated = todo.dateCreated,
+            status = todo.status,
+            comments = comments.map { it.toRes() }
+        )
     }
 
     // 투두리스트 작성
