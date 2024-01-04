@@ -1,9 +1,6 @@
 package com.example.todoapplication.domain.todos.controller
 
-import com.example.todoapplication.domain.todos.dto.CreateTodoRequest
-import com.example.todoapplication.domain.todos.dto.TodoResponse
-import com.example.todoapplication.domain.todos.dto.UpdateStatus
-import com.example.todoapplication.domain.todos.dto.UpdateTodoRequest
+import com.example.todoapplication.domain.todos.dto.*
 import com.example.todoapplication.domain.todos.model.TodoStatus
 import com.example.todoapplication.domain.todos.service.TodoService
 import org.springframework.http.HttpStatus
@@ -34,7 +31,7 @@ class TodoController(
 
     // 개별조회 (연관댓글 추가)
     @GetMapping("/{todoId}")
-    fun getTodo(@PathVariable todoId: Long, commentId: Long): ResponseEntity<TodoResponse> {
+    fun getTodo(@PathVariable todoId: Long, commentId: Long): ResponseEntity<TodoWithCommentResponse> {
         return ResponseEntity
             .status(HttpStatus.OK)
             .body(todoService.getTodoById(todoId, commentId))

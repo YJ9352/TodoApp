@@ -1,9 +1,6 @@
 package com.example.todoapplication.domain.todos.service
 
-import com.example.todoapplication.domain.todos.dto.CreateTodoRequest
-import com.example.todoapplication.domain.todos.dto.TodoResponse
-import com.example.todoapplication.domain.todos.dto.UpdateStatus
-import com.example.todoapplication.domain.todos.dto.UpdateTodoRequest
+import com.example.todoapplication.domain.todos.dto.*
 
 interface TodoService {
 
@@ -11,7 +8,7 @@ interface TodoService {
     fun getAllTodoList(): List<TodoResponse>
 
     // 투두리스트 개별조회
-    fun getTodoById(todoId: Long, commentId: Long): TodoResponse
+    fun getTodoById(todoId: Long, commentId: Long): TodoWithCommentResponse
 
     // 투두리스트 작성
     fun createTodo(request: CreateTodoRequest): TodoResponse

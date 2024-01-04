@@ -3,6 +3,7 @@ package com.example.todoapplication.domain.todos.model
 import com.example.todoapplication.domain.comment.model.Comment
 import com.example.todoapplication.domain.comment.model.toRes
 import com.example.todoapplication.domain.todos.dto.TodoResponse
+import com.example.todoapplication.domain.todos.dto.TodoWithCommentResponse
 import jakarta.persistence.*
 import java.lang.Boolean.FALSE
 import java.time.LocalDateTime
@@ -40,6 +41,17 @@ class Todo(
 
 fun Todo.toResponse(): TodoResponse {
     return TodoResponse(
+        id = id!!,
+        userName = userName,
+        title = title,
+        detail = detail,
+        dateCreated = dateCreated,
+        status = status,
+    )
+}
+
+fun Todo.todoWithCommentResponse(): TodoWithCommentResponse {
+    return TodoWithCommentResponse(
         id = id!!,
         userName = userName,
         title = title,

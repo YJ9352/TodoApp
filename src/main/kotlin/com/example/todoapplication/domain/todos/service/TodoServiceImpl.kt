@@ -4,10 +4,7 @@ import com.example.todoapplication.domain.comment.model.Comment
 import com.example.todoapplication.domain.comment.model.toRes
 import com.example.todoapplication.domain.comment.repository.CommentRepository
 import com.example.todoapplication.domain.exception.ModelNotFoundException
-import com.example.todoapplication.domain.todos.dto.CreateTodoRequest
-import com.example.todoapplication.domain.todos.dto.TodoResponse
-import com.example.todoapplication.domain.todos.dto.UpdateStatus
-import com.example.todoapplication.domain.todos.dto.UpdateTodoRequest
+import com.example.todoapplication.domain.todos.dto.*
 import com.example.todoapplication.domain.todos.model.Todo
 import com.example.todoapplication.domain.todos.model.toResponse
 import com.example.todoapplication.domain.todos.repository.TodoRepository
@@ -29,13 +26,13 @@ class TodoServiceImpl(
 
     // 투두리스트 개별조회 (연관댓글 추가)
     @Transactional
-    override fun getTodoById(todoId: Long, commentId: Long): TodoResponse {
+    override fun getTodoById(todoId: Long, commentId: Long): TodoWithCommentResponse {
         val todo = todoRepository.findByIdOrNull(todoId) ?: throw ModelNotFoundException(todoId)
 
         val comments: List<Comment> = commentRepository.findByTodoId(todoId)
         todo.comments.addAll(comments)
 
-        return TodoResponse(
+        return TodoWithCommentResponse(
             id = todo.id!!,
             userName = todo.userName,
             title = todo.title,
