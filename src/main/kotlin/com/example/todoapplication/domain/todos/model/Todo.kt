@@ -49,15 +49,3 @@ fun Todo.toResponse(): TodoResponse {
         status = status,
     )
 }
-
-fun Todo.todoWithCommentResponse(): TodoWithCommentResponse {
-    return TodoWithCommentResponse(
-        id = id!!,
-        userName = userName,
-        title = title,
-        detail = detail,
-        dateCreated = dateCreated,
-        status = status,
-        comments = comments.map { it.toRes() }
-    )
-}
