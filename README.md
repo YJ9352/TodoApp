@@ -21,7 +21,7 @@ Use Case Diagram
 
 ERD
 -------------
-![Use Case Diagram](./image/ERD.png)
+![Use Case Diagram](./image/ERD.JPG)
 
 
 API명세서
