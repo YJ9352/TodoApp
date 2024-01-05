@@ -27,4 +27,4 @@ ERD
 API명세서
 -------------
 ![API명세서](./image/API명세서.JPG)
-![TodoAPI](./image/TodoAPI.JPG)
+
