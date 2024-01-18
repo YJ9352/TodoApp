@@ -1,6 +1,5 @@
 package com.example.todoapplication.domain.todos.controller
 
-import com.example.todoapplication.domain.todos.dto.UpdateStatus
 import com.example.todoapplication.domain.todos.dto.request.CreateTodoRequest
 import com.example.todoapplication.domain.todos.dto.request.UpdateTodoRequest
 import com.example.todoapplication.domain.todos.dto.response.TodoResponse

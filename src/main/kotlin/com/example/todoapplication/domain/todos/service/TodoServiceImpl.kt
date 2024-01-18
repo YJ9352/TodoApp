@@ -5,7 +5,6 @@ import com.example.todoapplication.domain.comment.model.toRes
 import com.example.todoapplication.domain.comment.repository.CommentRepository
 import com.example.todoapplication.domain.exception.ModelNotFoundException
 import com.example.todoapplication.domain.todos.common.TodoStatus
-import com.example.todoapplication.domain.todos.dto.UpdateStatus
 import com.example.todoapplication.domain.todos.dto.request.CreateTodoRequest
 import com.example.todoapplication.domain.todos.dto.request.UpdateTodoRequest
 import com.example.todoapplication.domain.todos.dto.response.TodoResponse
