@@ -92,12 +92,8 @@ class TodoServiceImpl(
     @Transactional
     override fun updateStatus(todoId: Long): TodoResponse {
         val todo = todoRepository.findByIdOrNull(todoId) ?: throw ModelNotFoundException(todoId)
-        if (todo.status == TodoStatus.FALSE) {
-            todo.status = TodoStatus.TRUE
-            return todoRepository.save(todo).toTodoResponse()
-        } else {
-            todo.status = TodoStatus.FALSE
-        }
+        todo.status = if (todo.status == TodoStatus.FALSE) TodoStatus.TRUE else TodoStatus.FALSE
+
         return todoRepository.save(todo).toTodoResponse()
     }
 }

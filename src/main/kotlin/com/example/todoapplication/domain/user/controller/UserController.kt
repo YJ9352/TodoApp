@@ -37,7 +37,8 @@ class UserController(
     }
     
     // 회원정보 수정
-    @PostMapping()
+
+    @PostMapping("/userupdate")
     fun userUpdate(
         @RequestBody request: UserUpdateRequest,
         userEmail: String

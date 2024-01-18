@@ -11,7 +11,6 @@ import com.example.todoapplication.domain.user.dto.response.UserUpdateResponse
 import com.example.todoapplication.domain.user.model.UserEntity
 import com.example.todoapplication.domain.user.model.toUserResponse
 import com.example.todoapplication.domain.user.repository.UserRepository
-import com.example.todoapplication.infra.security.jwt.JwtPlugin
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -19,8 +18,7 @@ import org.springframework.transaction.annotation.Transactional
 @Service
 class UserServiceImpl(
     private val userRepository: UserRepository,
-    private val passwordEncoder: PasswordEncoder,
-    private val jwtPlugin: JwtPlugin
+    private val passwordEncoder: PasswordEncoder
 ) : UserService {
 
     @Transactional
@@ -43,9 +41,7 @@ class UserServiceImpl(
             ?.takeIf { passwordEncoder.matches(request.userPassword, it.userPassword) }
             ?: throw IllegalArgumentException("아이디 또는 비밀번호가 일치하지 않습니다.")
 
-        return SignInResponse(
-            accessToken = jwtPlugin.generateAccessToken(userEmail = user.userEmail)
-        )
+        return SignInResponse(user.userEmail)
     }
 
     override fun withdraw(userEamil: String, request: WithdrawRequest) {
