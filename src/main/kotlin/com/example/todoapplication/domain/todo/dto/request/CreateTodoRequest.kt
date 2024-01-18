@@ -1,6 +1,6 @@
-package com.example.todoapplication.domain.todos.dto.request
+package com.example.todoapplication.domain.todo.dto.request
 
-import com.example.todoapplication.domain.todos.common.TodoStatus
+import com.example.todoapplication.domain.todo.common.TodoStatus
 
 data class CreateTodoRequest(
     val userName: String,

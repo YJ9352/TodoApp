@@ -1,17 +1,17 @@
-package com.example.todoapplication.domain.todos.service
+package com.example.todoapplication.domain.todo.service
 
 import com.example.todoapplication.domain.comment.model.Comment
-import com.example.todoapplication.domain.comment.model.toRes
+import com.example.todoapplication.domain.comment.model.toCommentResponse
 import com.example.todoapplication.domain.comment.repository.CommentRepository
 import com.example.todoapplication.domain.exception.ModelNotFoundException
-import com.example.todoapplication.domain.todos.common.TodoStatus
-import com.example.todoapplication.domain.todos.dto.request.CreateTodoRequest
-import com.example.todoapplication.domain.todos.dto.request.UpdateTodoRequest
-import com.example.todoapplication.domain.todos.dto.response.TodoResponse
-import com.example.todoapplication.domain.todos.dto.response.TodoWithCommentResponse
-import com.example.todoapplication.domain.todos.model.Todo
-import com.example.todoapplication.domain.todos.model.toResponse
-import com.example.todoapplication.domain.todos.repository.TodoRepository
+import com.example.todoapplication.domain.todo.common.TodoStatus
+import com.example.todoapplication.domain.todo.dto.request.CreateTodoRequest
+import com.example.todoapplication.domain.todo.dto.request.UpdateTodoRequest
+import com.example.todoapplication.domain.todo.dto.response.TodoResponse
+import com.example.todoapplication.domain.todo.dto.response.TodoWithCommentResponse
+import com.example.todoapplication.domain.todo.model.Todo
+import com.example.todoapplication.domain.todo.model.toTodoResponse
+import com.example.todoapplication.domain.todo.repository.TodoRepository
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -25,7 +25,7 @@ class TodoServiceImpl(
 
     // 투두 리스트 전체조회(내림차순)
     override fun getAllTodoList(): List<TodoResponse> {
-        return todoRepository.findAll().sortedByDescending { it.dateCreated }.map { it.toResponse() }
+        return todoRepository.findAll().sortedByDescending { it.dateCreated }.map { it.toTodoResponse() }
     }
 
     // 투두리스트 개별조회 (연관댓글 추가)
@@ -43,7 +43,7 @@ class TodoServiceImpl(
             detail = todo.detail,
             dateCreated = todo.dateCreated,
             status = todo.status,
-            comments = comments.map { it.toRes() }
+            comments = comments.map { it.toCommentResponse() }
         )
     }
 
@@ -58,7 +58,7 @@ class TodoServiceImpl(
                 dateCreated = LocalDateTime.now(),
                 status = TodoStatus.FALSE
                 )
-        ).toResponse()
+        ).toTodoResponse()
     }
 
     // 투두리스트 수정
@@ -71,7 +71,7 @@ class TodoServiceImpl(
         todo.title = title
         todo.detail = detail
 
-        return todoRepository.save(todo).toResponse()
+        return todoRepository.save(todo).toTodoResponse()
     }
 
     // 투두리스트 삭제
@@ -88,10 +88,10 @@ class TodoServiceImpl(
         val todo = todoRepository.findByIdOrNull(todoId) ?: throw ModelNotFoundException(todoId)
         if (todo.status == TodoStatus.FALSE) {
             todo.status = TodoStatus.TRUE
-            return todoRepository.save(todo).toResponse()
+            return todoRepository.save(todo).toTodoResponse()
         } else {
             todo.status = TodoStatus.FALSE
         }
-        return todoRepository.save(todo).toResponse()
+        return todoRepository.save(todo).toTodoResponse()
     }
 }

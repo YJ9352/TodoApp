@@ -1,9 +1,9 @@
-package com.example.todoapplication.domain.todos.service
+package com.example.todoapplication.domain.todo.service
 
-import com.example.todoapplication.domain.todos.dto.request.CreateTodoRequest
-import com.example.todoapplication.domain.todos.dto.request.UpdateTodoRequest
-import com.example.todoapplication.domain.todos.dto.response.TodoResponse
-import com.example.todoapplication.domain.todos.dto.response.TodoWithCommentResponse
+import com.example.todoapplication.domain.todo.dto.request.CreateTodoRequest
+import com.example.todoapplication.domain.todo.dto.request.UpdateTodoRequest
+import com.example.todoapplication.domain.todo.dto.response.TodoResponse
+import com.example.todoapplication.domain.todo.dto.response.TodoWithCommentResponse
 
 interface TodoService {
 

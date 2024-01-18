@@ -15,10 +15,10 @@ interface CommentService {
     fun getCommentById(commentId: Long): CommentResponse
 
     // 댓글 작성
-    fun createComment(todoId: Long, request: CreateCommentRequest): CommentReturnResponse
+    fun createComment(todoId: Long, commentId: Long, request: CreateCommentRequest): CommentResponse
 
     // 댓글 수정
-    fun updateComment(commentId: Long, request: UpdateCommentRequest): CommentReturnResponse
+    fun updateComment(commentId: Long, request: UpdateCommentRequest): CommentResponse
 
     // 댓글 삭제
     fun deleteComment(commentId: Long, request: DeleteCommentRequest)

@@ -1,8 +1,7 @@
 package com.example.todoapplication.domain.comment.model
 
 import com.example.todoapplication.domain.comment.dto.response.CommentResponse
-import com.example.todoapplication.domain.comment.dto.response.CommentReturnResponse
-import com.example.todoapplication.domain.todos.model.Todo
+import com.example.todoapplication.domain.todo.model.Todo
 import jakarta.persistence.*
 
 @Entity
@@ -30,18 +29,11 @@ class Comment(
     var commentid: Long? = null
 }
 
-fun Comment.toResponse(): CommentResponse {
+fun Comment.toCommentResponse(): CommentResponse {
     return CommentResponse(
         commentId = commentid!!,
         commentName = commentName,
         commentPassword = commentPassword,
         commentDetail = commentDetail,
-    )
-}
-
-fun Comment.toRes(): CommentReturnResponse {
-    return CommentReturnResponse(
-        commentName = this.commentName,
-        commentDetail = this.commentDetail
     )
 }

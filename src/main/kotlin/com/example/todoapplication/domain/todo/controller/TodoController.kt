@@ -1,10 +1,10 @@
-package com.example.todoapplication.domain.todos.controller
+package com.example.todoapplication.domain.todo.controller
 
-import com.example.todoapplication.domain.todos.dto.request.CreateTodoRequest
-import com.example.todoapplication.domain.todos.dto.request.UpdateTodoRequest
-import com.example.todoapplication.domain.todos.dto.response.TodoResponse
-import com.example.todoapplication.domain.todos.dto.response.TodoWithCommentResponse
-import com.example.todoapplication.domain.todos.service.TodoService
+import com.example.todoapplication.domain.todo.dto.request.CreateTodoRequest
+import com.example.todoapplication.domain.todo.dto.request.UpdateTodoRequest
+import com.example.todoapplication.domain.todo.dto.response.TodoResponse
+import com.example.todoapplication.domain.todo.dto.response.TodoWithCommentResponse
+import com.example.todoapplication.domain.todo.service.TodoService
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*

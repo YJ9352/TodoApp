@@ -1,8 +1,8 @@
-package com.example.todoapplication.domain.todos.model
+package com.example.todoapplication.domain.todo.model
 
 import com.example.todoapplication.domain.comment.model.Comment
-import com.example.todoapplication.domain.todos.common.TodoStatus
-import com.example.todoapplication.domain.todos.dto.response.TodoResponse
+import com.example.todoapplication.domain.todo.common.TodoStatus
+import com.example.todoapplication.domain.todo.dto.response.TodoResponse
 import jakarta.persistence.*
 import java.time.LocalDateTime
 
@@ -38,7 +38,7 @@ class Todo(
 
 }
 
-fun Todo.toResponse(): TodoResponse {
+fun Todo.toTodoResponse(): TodoResponse {
     return TodoResponse(
         todoid = todoid!!,
         userName = userName,

@@ -1,6 +1,6 @@
-package com.example.todoapplication.domain.todos.dto.response
+package com.example.todoapplication.domain.todo.dto.response
 
-import com.example.todoapplication.domain.todos.common.TodoStatus
+import com.example.todoapplication.domain.todo.common.TodoStatus
 import java.time.LocalDateTime
 
 data class TodoResponse(

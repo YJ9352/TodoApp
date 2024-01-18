@@ -1,4 +1,4 @@
-package com.example.todoapplication.domain.todos.dto.request
+package com.example.todoapplication.domain.todo.dto.request
 
 data class UpdateTodoRequest(
     val userName: String,
