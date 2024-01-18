@@ -1,7 +1,11 @@
 package com.example.todoapplication.domain.todos.controller
 
 import com.example.todoapplication.domain.todos.dto.*
-import com.example.todoapplication.domain.todos.model.TodoStatus
+import com.example.todoapplication.domain.todos.dto.request.CreateTodoRequest
+import com.example.todoapplication.domain.todos.dto.request.UpdateTodoRequest
+import com.example.todoapplication.domain.todos.dto.response.TodoResponse
+import com.example.todoapplication.domain.todos.dto.response.TodoWithCommentResponse
+import com.example.todoapplication.domain.todos.common.TodoStatus
 import com.example.todoapplication.domain.todos.service.TodoService
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -66,11 +70,12 @@ class TodoController(
     }
 
     // 할일 완료처리 여부
-    @PatchMapping("/{todoId}")
-    fun updateStatus(@PathVariable todoId: Long,
-                     @RequestBody status: TodoStatus): ResponseEntity<Boolean> {
-        return ResponseEntity
-            .status(HttpStatus.OK)
-            .body(todoService.updateStatus(todoId, UpdateStatus(true)))
-    }
+//    @PatchMapping("/{todoId}")
+//    fun updateStatus(@PathVariable todoId: Long,
+//                     @RequestBody status: TodoStatus
+//    ): ResponseEntity<Boolean> {
+//        return ResponseEntity
+//            .status(HttpStatus.OK)
+//            .body(todoService.updateStatus(todoId, UpdateStatus(true)))
+//    }
 }

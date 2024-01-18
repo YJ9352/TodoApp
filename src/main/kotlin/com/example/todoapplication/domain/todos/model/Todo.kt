@@ -1,11 +1,9 @@
 package com.example.todoapplication.domain.todos.model
 
 import com.example.todoapplication.domain.comment.model.Comment
-import com.example.todoapplication.domain.comment.model.toRes
-import com.example.todoapplication.domain.todos.dto.TodoResponse
-import com.example.todoapplication.domain.todos.dto.TodoWithCommentResponse
+import com.example.todoapplication.domain.todos.common.TodoStatus
+import com.example.todoapplication.domain.todos.dto.response.TodoResponse
 import jakarta.persistence.*
-import java.lang.Boolean.FALSE
 import java.time.LocalDateTime
 
 @Entity
@@ -24,8 +22,9 @@ class Todo(
     @Column(name = "datecreated")
     val dateCreated: LocalDateTime = LocalDateTime.now(),
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "status")
-    var status: Boolean = FALSE,
+    var status: TodoStatus,
 
     @OneToMany(mappedBy = "todo", cascade = [CascadeType.ALL])
     var comments: MutableList<Comment> = mutableListOf()
@@ -34,18 +33,18 @@ class Todo(
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    var id: Long? = null
+    @Column(name = "todoid")
+    var todoid: Long? = null
 
 }
 
 fun Todo.toResponse(): TodoResponse {
     return TodoResponse(
-        id = id!!,
+        todoid = todoid!!,
         userName = userName,
         title = title,
         detail = detail,
         dateCreated = dateCreated,
-        status = status,
+        status = TodoStatus.FALSE,
     )
 }
