@@ -1,5 +1,7 @@
 package com.example.todoapplication.domain.todos.controller
 
+import com.example.todoapplication.domain.todos.common.TodoStatus
+import com.example.todoapplication.domain.todos.dto.UpdateStatus
 import com.example.todoapplication.domain.todos.dto.request.CreateTodoRequest
 import com.example.todoapplication.domain.todos.dto.request.UpdateTodoRequest
 import com.example.todoapplication.domain.todos.dto.response.TodoResponse
@@ -7,14 +9,7 @@ import com.example.todoapplication.domain.todos.dto.response.TodoWithCommentResp
 import com.example.todoapplication.domain.todos.service.TodoService
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
-import org.springframework.web.bind.annotation.DeleteMapping
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.PutMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 
 @RequestMapping("/todos")
 @RestController
@@ -67,12 +62,12 @@ class TodoController(
     }
 
     // 할일 완료처리 여부
-//    @PatchMapping("/{todoId}")
-//    fun updateStatus(@PathVariable todoId: Long,
-//                     @RequestBody status: TodoStatus
-//    ): ResponseEntity<Boolean> {
-//        return ResponseEntity
-//            .status(HttpStatus.OK)
-//            .body(todoService.updateStatus(todoId, UpdateStatus(true)))
-//    }
+    @PatchMapping("/{todoId}")
+    fun updateStatus(@PathVariable todoId: Long,
+                     @RequestBody status: UpdateStatus
+    ): ResponseEntity<TodoResponse> {
+        return ResponseEntity
+            .status(HttpStatus.OK)
+            .body(todoService.updateStatus(todoId, status))
+    }
 }
