@@ -1,6 +1,10 @@
 package com.example.todoapplication.domain.comment.service
 
-import com.example.todoapplication.domain.comment.dto.*
+import com.example.todoapplication.domain.comment.dto.request.CreateCommentRequest
+import com.example.todoapplication.domain.comment.dto.request.DeleteCommentRequest
+import com.example.todoapplication.domain.comment.dto.request.UpdateCommentRequest
+import com.example.todoapplication.domain.comment.dto.response.CommentResponse
+import com.example.todoapplication.domain.comment.dto.response.CommentReturnResponse
 import com.example.todoapplication.domain.comment.model.Comment
 import com.example.todoapplication.domain.comment.model.toRes
 import com.example.todoapplication.domain.comment.model.toResponse
@@ -14,7 +18,7 @@ import org.springframework.transaction.annotation.Transactional
 @Service
 class CommentServiceImpl(
     private val commentRepository: CommentRepository,
-    private val todoRepository: TodoRepository,
+    private val todoRepository: TodoRepository
 ): CommentService {
 
     // 댓글 전체조회

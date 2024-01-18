@@ -4,7 +4,11 @@ import com.example.todoapplication.domain.comment.model.Comment
 import com.example.todoapplication.domain.comment.model.toRes
 import com.example.todoapplication.domain.comment.repository.CommentRepository
 import com.example.todoapplication.domain.exception.ModelNotFoundException
-import com.example.todoapplication.domain.todos.dto.*
+import com.example.todoapplication.domain.todos.common.TodoStatus
+import com.example.todoapplication.domain.todos.dto.request.CreateTodoRequest
+import com.example.todoapplication.domain.todos.dto.request.UpdateTodoRequest
+import com.example.todoapplication.domain.todos.dto.response.TodoResponse
+import com.example.todoapplication.domain.todos.dto.response.TodoWithCommentResponse
 import com.example.todoapplication.domain.todos.model.Todo
 import com.example.todoapplication.domain.todos.model.toResponse
 import com.example.todoapplication.domain.todos.repository.TodoRepository
@@ -29,11 +33,11 @@ class TodoServiceImpl(
     override fun getTodoById(todoId: Long, commentId: Long): TodoWithCommentResponse {
         val todo = todoRepository.findByIdOrNull(todoId) ?: throw ModelNotFoundException(todoId)
 
-        val comments: List<Comment> = commentRepository.findByTodoId(todoId)
+        val comments: List<Comment> = commentRepository.findByTodo(todo)
         todo.comments.addAll(comments)
 
         return TodoWithCommentResponse(
-            id = todo.id!!,
+            todoid = todo.todoid!!,
             userName = todo.userName,
             title = todo.title,
             detail = todo.detail,
@@ -52,7 +56,7 @@ class TodoServiceImpl(
                 title = request.title,
                 detail = request.detail,
                 dateCreated = LocalDateTime.now(),
-                status = false
+                status = TodoStatus.FALSE
                 )
         ).toResponse()
     }
@@ -77,14 +81,17 @@ class TodoServiceImpl(
         todoRepository.delete(todo)
     }
 
-    // 할일 완료처리 여부
+    // 할일 완료처리 여부 (기본값 FALSE)
+    // status가 FALSE면 실행시 TRUE로 변경, TRUE면 FALSE로 변경 가능하게 수정
     @Transactional
-    override fun updateStatus(todoId: Long, request: UpdateStatus): Boolean {
+    override fun updateStatus(todoId: Long): TodoResponse {
         val todo = todoRepository.findByIdOrNull(todoId) ?: throw ModelNotFoundException(todoId)
-        val (status) = request
-
-        todo.status = status
-
-        return if (!status) true else false
+        if (todo.status == TodoStatus.FALSE) {
+            todo.status = TodoStatus.TRUE
+            return todoRepository.save(todo).toResponse()
+        } else {
+            todo.status = TodoStatus.FALSE
+        }
+        return todoRepository.save(todo).toResponse()
     }
 }
