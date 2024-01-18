@@ -16,5 +16,5 @@ interface UserService {
 
     fun withdraw(userEamil: String, request: WithdrawRequest)
 
-    fun userUpdate(userId: Long, userEamil: String, request: UserUpdateRequest): UserUpdateResponse
+    fun userUpdate(userEamil: String, request: UserUpdateRequest): UserUpdateResponse
 }

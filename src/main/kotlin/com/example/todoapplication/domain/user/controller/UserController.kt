@@ -40,12 +40,11 @@ class UserController(
     @PostMapping()
     fun userUpdate(
         @RequestBody request: UserUpdateRequest,
-        userId: Long,
         userEmail: String
     ): ResponseEntity<UserUpdateResponse> {
         return ResponseEntity
             .status(HttpStatus.CREATED)
-            .body(userService.userUpdate(userId, userEmail, request))
+            .body(userService.userUpdate(userEmail, request))
     }
     
 }

@@ -57,7 +57,6 @@ class CommentServiceImpl(
         commentId: Long,
         request: CommentRequest
     ): CommentResponse {
-        val todo = todoRepository.findByIdOrNull(todoId) ?: throw ModelNotFoundException(todoId)
         val comment = commentRepository.findByIdOrNull(commentId) ?: throw ModelNotFoundException(commentId)
 
         comment.commentDetail = request.commentDetail

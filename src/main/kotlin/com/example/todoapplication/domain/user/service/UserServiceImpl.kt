@@ -57,7 +57,7 @@ class UserServiceImpl(
     }
 
     @Transactional
-    override fun userUpdate(userId: Long, userEamil: String, request: UserUpdateRequest): UserUpdateResponse {
+    override fun userUpdate(userEamil: String, request: UserUpdateRequest): UserUpdateResponse {
         val user = userRepository.findByUserEmail(userEamil)
             ?.takeIf { passwordEncoder.matches(request.userPassword, it.userPassword) }
             ?: throw IllegalArgumentException("비밀번호가 일치하지 않습니다.")
