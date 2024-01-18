@@ -34,7 +34,7 @@ class UserEntity(
 
 fun UserEntity.toUserResponse(): UserResponse {
     return UserResponse(
-        userId = userId!!,
+        userId = userId,
         userEmail = userEmail,
         userPassword = userPassword,
         userName = userName,

@@ -1,6 +1,5 @@
 package com.example.todoapplication.domain.user.service
 
-import com.example.todoapplication.domain.exception.ModelNotFoundException
 import com.example.todoapplication.domain.user.common.UserStatus
 import com.example.todoapplication.domain.user.dto.request.SignInRequest
 import com.example.todoapplication.domain.user.dto.request.SignUpRequest

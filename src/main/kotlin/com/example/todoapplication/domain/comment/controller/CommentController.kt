@@ -73,7 +73,7 @@ class CommentController(
         @RequestHeader("userid") userId: Long,
         @RequestBody request: CommentRequest
     ): ResponseEntity<Unit> {
-        commentService.deleteComment(commentId, request)
+        commentService.deleteComment(commentId)
         return ResponseEntity
             .status(HttpStatus.NO_CONTENT)
             .build()
