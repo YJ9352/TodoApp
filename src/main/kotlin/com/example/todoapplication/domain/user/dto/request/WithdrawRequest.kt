@@ -1,6 +1,5 @@
 package com.example.todoapplication.domain.user.dto.request
 
-data class SignInRequest(
-    val userEmail: String,
+data class WithdrawRequest(
     val userPassword: String,
 )

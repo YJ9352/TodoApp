@@ -37,7 +37,7 @@ class TodoServiceImpl(
         todo.comments.addAll(comments)
 
         return TodoWithCommentResponse(
-            todoid = todo.todoid!!,
+            todoId = todo.todoId!!,
             userName = todo.userName,
             title = todo.title,
             detail = todo.detail,
@@ -56,7 +56,7 @@ class TodoServiceImpl(
                 title = request.title,
                 detail = request.detail,
                 dateCreated = LocalDateTime.now(),
-                status = TodoStatus.FALSE
+                status = TodoStatus.FALSE,
                 )
         ).toTodoResponse()
     }

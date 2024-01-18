@@ -4,7 +4,7 @@ import com.example.todoapplication.domain.todo.common.TodoStatus
 import java.time.LocalDateTime
 
 data class TodoResponse(
-    val todoid: Long,
+    val todoId: Long,
     val userName: String,
     val title: String,
     val detail: String?,

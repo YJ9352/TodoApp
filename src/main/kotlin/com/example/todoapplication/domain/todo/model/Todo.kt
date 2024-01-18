@@ -26,25 +26,25 @@ class Todo(
     @Column(name = "status")
     var status: TodoStatus,
 
-    @OneToMany(mappedBy = "todo", cascade = [CascadeType.ALL])
-    var comments: MutableList<Comment> = mutableListOf()
+    @OneToMany(mappedBy = "todo", fetch = FetchType.LAZY, cascade = [CascadeType.ALL], orphanRemoval = true)
+    var comments: MutableList<Comment> = mutableListOf(),
 
-) {
+    ) {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "todoid")
-    var todoid: Long? = null
+    val todoId: Long = 0
 
 }
 
 fun Todo.toTodoResponse(): TodoResponse {
     return TodoResponse(
-        todoid = todoid!!,
+        todoId = todoId,
         userName = userName,
         title = title,
         detail = detail,
         dateCreated = dateCreated,
-        status = TodoStatus.FALSE,
+        status = status,
     )
 }
