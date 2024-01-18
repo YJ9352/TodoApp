@@ -1,6 +1,5 @@
 package com.example.todoapplication.domain.todos.service
 
-import com.example.todoapplication.domain.todos.dto.*
 import com.example.todoapplication.domain.todos.dto.request.CreateTodoRequest
 import com.example.todoapplication.domain.todos.dto.request.UpdateTodoRequest
 import com.example.todoapplication.domain.todos.dto.response.TodoResponse

@@ -1,17 +1,14 @@
 package com.example.todoapplication.domain.todos.controller
 
-import com.example.todoapplication.domain.todos.dto.*
 import com.example.todoapplication.domain.todos.dto.request.CreateTodoRequest
 import com.example.todoapplication.domain.todos.dto.request.UpdateTodoRequest
 import com.example.todoapplication.domain.todos.dto.response.TodoResponse
 import com.example.todoapplication.domain.todos.dto.response.TodoWithCommentResponse
-import com.example.todoapplication.domain.todos.common.TodoStatus
 import com.example.todoapplication.domain.todos.service.TodoService
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PatchMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.PutMapping
