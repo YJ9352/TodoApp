@@ -15,8 +15,8 @@ class Comment(
     @Column(name = "commentpassword")
     var commentPassword: String,
 
-    @Column(name = "commentcontents")
-    var commentContents: String,
+    @Column(name = "commentdetail")
+    var commentDetail: String,
 
     @ManyToOne
     @JoinColumn(name = "todoid", nullable = false)
@@ -35,13 +35,13 @@ fun Comment.toResponse(): CommentResponse {
         commentId = commentid!!,
         commentName = commentName,
         commentPassword = commentPassword,
-        commentContents = commentContents,
+        commentDetail = commentDetail,
     )
 }
 
 fun Comment.toRes(): CommentReturnResponse {
     return CommentReturnResponse(
         commentName = this.commentName,
-        commentContents = this.commentContents
+        commentDetail = this.commentDetail
     )
 }

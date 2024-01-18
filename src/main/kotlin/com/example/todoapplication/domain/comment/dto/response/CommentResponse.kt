@@ -4,5 +4,5 @@ data class CommentResponse (
     val commentId: Long,
     val commentName: String,
     val commentPassword: String,
-    val commentContents: String,
+    val commentDetail: String,
 )

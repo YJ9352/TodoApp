@@ -2,5 +2,5 @@ package com.example.todoapplication.domain.comment.dto.response
 
 data class CommentReturnResponse (
     val commentName: String,
-    val commentContents: String,
+    val commentDetail: String,
 )
