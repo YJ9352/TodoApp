@@ -1,6 +1,6 @@
 package com.example.todoapplication.domain.todos.dto.response
 
-import com.example.todoapplication.domain.comment.dto.CommentReturnResponse
+import com.example.todoapplication.domain.comment.dto.response.CommentReturnResponse
 import com.example.todoapplication.domain.todos.common.TodoStatus
 import java.time.LocalDateTime
 

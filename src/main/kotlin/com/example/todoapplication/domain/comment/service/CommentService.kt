@@ -1,6 +1,10 @@
 package com.example.todoapplication.domain.comment.service
 
-import com.example.todoapplication.domain.comment.dto.*
+import com.example.todoapplication.domain.comment.dto.request.CreateCommentRequest
+import com.example.todoapplication.domain.comment.dto.request.DeleteCommentRequest
+import com.example.todoapplication.domain.comment.dto.request.UpdateCommentRequest
+import com.example.todoapplication.domain.comment.dto.response.CommentResponse
+import com.example.todoapplication.domain.comment.dto.response.CommentReturnResponse
 
 interface CommentService {
 

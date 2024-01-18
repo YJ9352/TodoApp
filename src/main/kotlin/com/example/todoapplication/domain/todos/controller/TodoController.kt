@@ -62,11 +62,9 @@ class TodoController(
 
     // 할일 완료처리 여부
     @PatchMapping("/{todoId}")
-    fun updateStatus(@PathVariable todoId: Long,
-                     @RequestBody status: UpdateStatus
-    ): ResponseEntity<TodoResponse> {
+    fun updateStatus(@PathVariable todoId: Long): ResponseEntity<TodoResponse> {
         return ResponseEntity
             .status(HttpStatus.OK)
-            .body(todoService.updateStatus(todoId, status))
+            .body(todoService.updateStatus(todoId))
     }
 }
