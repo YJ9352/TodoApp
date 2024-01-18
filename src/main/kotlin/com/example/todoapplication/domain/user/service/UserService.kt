@@ -6,6 +6,7 @@ import com.example.todoapplication.domain.user.dto.request.UserUpdateRequest
 import com.example.todoapplication.domain.user.dto.request.WithdrawRequest
 import com.example.todoapplication.domain.user.dto.response.SignInResponse
 import com.example.todoapplication.domain.user.dto.response.UserResponse
+import com.example.todoapplication.domain.user.dto.response.UserUpdateResponse
 
 interface UserService {
 
@@ -15,5 +16,5 @@ interface UserService {
 
     fun withdraw(userEamil: String, request: WithdrawRequest)
 
-    fun userUpdate(userEamil: String, request: UserUpdateRequest): UserResponse
+    fun userUpdate(userId: Long, userEamil: String, request: UserUpdateRequest): UserUpdateResponse
 }

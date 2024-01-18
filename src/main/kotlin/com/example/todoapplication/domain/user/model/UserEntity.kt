@@ -29,7 +29,7 @@ class UserEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "userid")
-    val userId: Long? = null
+    val userId: Long = 0
 }
 
 fun UserEntity.toUserResponse(): UserResponse {

@@ -1,7 +1,7 @@
 package com.example.todoapplication.domain.comment.dto.request
 
-data class UpdateCommentRequest (
-    val commentName: String,
-    val commentPassword: String,
+data class CommentRequest (
+    val userId: Long,
+    val todoId: Long,
     val commentDetail: String,
 )

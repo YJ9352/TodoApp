@@ -3,6 +3,7 @@ package com.example.todoapplication.domain.todo.model
 import com.example.todoapplication.domain.comment.model.Comment
 import com.example.todoapplication.domain.todo.common.TodoStatus
 import com.example.todoapplication.domain.todo.dto.response.TodoResponse
+import com.example.todoapplication.domain.user.model.UserEntity
 import jakarta.persistence.*
 import java.time.LocalDateTime
 
@@ -28,6 +29,10 @@ class Todo(
 
     @OneToMany(mappedBy = "todo", fetch = FetchType.LAZY, cascade = [CascadeType.ALL], orphanRemoval = true)
     var comments: MutableList<Comment> = mutableListOf(),
+
+    @ManyToOne
+    @JoinColumn(name = "userid")
+    val user: UserEntity,
 
     ) {
 

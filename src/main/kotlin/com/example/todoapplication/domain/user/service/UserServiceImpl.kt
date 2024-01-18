@@ -1,5 +1,6 @@
 package com.example.todoapplication.domain.user.service
 
+import com.example.todoapplication.domain.exception.ModelNotFoundException
 import com.example.todoapplication.domain.user.common.UserStatus
 import com.example.todoapplication.domain.user.dto.request.SignInRequest
 import com.example.todoapplication.domain.user.dto.request.SignUpRequest
@@ -7,6 +8,7 @@ import com.example.todoapplication.domain.user.dto.request.UserUpdateRequest
 import com.example.todoapplication.domain.user.dto.request.WithdrawRequest
 import com.example.todoapplication.domain.user.dto.response.SignInResponse
 import com.example.todoapplication.domain.user.dto.response.UserResponse
+import com.example.todoapplication.domain.user.dto.response.UserUpdateResponse
 import com.example.todoapplication.domain.user.model.UserEntity
 import com.example.todoapplication.domain.user.model.toUserResponse
 import com.example.todoapplication.domain.user.repository.UserRepository
@@ -55,7 +57,20 @@ class UserServiceImpl(
         userRepository.delete(userPass)
     }
 
-    override fun userUpdate(userEamil: String, request: UserUpdateRequest): UserResponse {
-        TODO("Not yet implemented")
+    @Transactional
+    override fun userUpdate(userId: Long, userEamil: String, request: UserUpdateRequest): UserUpdateResponse {
+        val user = userRepository.findByUserEmail(userEamil)
+            ?.takeIf { passwordEncoder.matches(request.userPassword, it.userPassword) }
+            ?: throw IllegalArgumentException("비밀번호가 일치하지 않습니다.")
+
+        user.userName = request.userName
+
+        if (passwordEncoder.matches(request.userPassword, user.userPassword)) {
+            user.userPassword = passwordEncoder.encode(request.newUserPassword)
+        }
+
+        userRepository.save(user)
+
+        return UserUpdateResponse(user.userEmail, user.userName)
     }
 }
