@@ -5,7 +5,8 @@ TodoList Application의 백엔드 서버 만들기 과제입니다.
 프로젝트 설명
 -------------
 * STEP 1: TodoList CRUD 구현
-* STEP 2: Comment CRUD 구현, TodoList 완료 기능, 개별 TodoList와 연관 Comment 추가 
+* STEP 2: Comment CRUD 구현, TodoList 완료 기능, 개별 TodoList와 연관 Comment 추가
+* STEP 3: 로그인 추가, 나머지는 아직 작성중입니다.
 
 개발 환경
 -------------
