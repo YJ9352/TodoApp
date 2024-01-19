@@ -1,10 +1,7 @@
 package com.example.todoapplication.domain.comment.service
 
-import com.example.todoapplication.domain.comment.dto.request.CreateCommentRequest
-import com.example.todoapplication.domain.comment.dto.request.DeleteCommentRequest
-import com.example.todoapplication.domain.comment.dto.request.UpdateCommentRequest
+import com.example.todoapplication.domain.comment.dto.request.CommentRequest
 import com.example.todoapplication.domain.comment.dto.response.CommentResponse
-import com.example.todoapplication.domain.comment.dto.response.CommentReturnResponse
 
 interface CommentService {
 
@@ -15,11 +12,11 @@ interface CommentService {
     fun getCommentById(commentId: Long): CommentResponse
 
     // 댓글 작성
-    fun createComment(todoId: Long, request: CreateCommentRequest): CommentReturnResponse
+    fun createComment(userId: Long, todoId: Long, request: CommentRequest): CommentResponse
 
     // 댓글 수정
-    fun updateComment(commentId: Long, request: UpdateCommentRequest): CommentReturnResponse
+    fun updateComment(userId: Long, todoId: Long,commentId: Long, request: CommentRequest): CommentResponse
 
     // 댓글 삭제
-    fun deleteComment(commentId: Long, request: DeleteCommentRequest)
+    fun deleteComment(commentId: Long)
 }
