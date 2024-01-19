@@ -1,7 +1,7 @@
 package com.example.todoapplication.domain.user.model
 
 import com.example.todoapplication.domain.todo.model.Todo
-import com.example.todoapplication.domain.user.common.UserStatus
+import com.example.todoapplication.domain.user.common.UserRole
 import com.example.todoapplication.domain.user.dto.response.UserResponse
 import jakarta.persistence.*
 
@@ -19,7 +19,7 @@ class UserEntity(
 
     @Enumerated(EnumType.STRING)
     @Column(name = "role")
-    var role: UserStatus,
+    var role: UserRole,
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     val userTodoList: MutableList<Todo> = mutableListOf(),

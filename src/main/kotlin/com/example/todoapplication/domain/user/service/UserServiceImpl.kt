@@ -1,6 +1,6 @@
 package com.example.todoapplication.domain.user.service
 
-import com.example.todoapplication.domain.user.common.UserStatus
+import com.example.todoapplication.domain.user.common.UserRole
 import com.example.todoapplication.domain.user.dto.request.SignInRequest
 import com.example.todoapplication.domain.user.dto.request.SignUpRequest
 import com.example.todoapplication.domain.user.dto.request.UserUpdateRequest
@@ -11,6 +11,7 @@ import com.example.todoapplication.domain.user.dto.response.UserUpdateResponse
 import com.example.todoapplication.domain.user.model.UserEntity
 import com.example.todoapplication.domain.user.model.toUserResponse
 import com.example.todoapplication.domain.user.repository.UserRepository
+import com.example.todoapplication.infra.security.jwt.JwtPlugin
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -18,7 +19,8 @@ import org.springframework.transaction.annotation.Transactional
 @Service
 class UserServiceImpl(
     private val userRepository: UserRepository,
-    private val passwordEncoder: PasswordEncoder
+    private val passwordEncoder: PasswordEncoder,
+    private val jwtPlugin: JwtPlugin
 ) : UserService {
 
     @Transactional
@@ -30,7 +32,7 @@ class UserServiceImpl(
                 userEmail = request.userEmail,
                 userPassword = passwordEncoder.encode(request.userPassword),
                 userName = request.userName,
-                role = UserStatus.USER,
+                role = UserRole.USER,
             )
         ).toUserResponse()
     }
@@ -41,7 +43,13 @@ class UserServiceImpl(
             ?.takeIf { passwordEncoder.matches(request.userPassword, it.userPassword) }
             ?: throw IllegalArgumentException("아이디 또는 비밀번호가 일치하지 않습니다.")
 
-        return SignInResponse(user.userEmail)
+        return SignInResponse(
+            accessToken = jwtPlugin.generateAccessToken(
+                userId = user.userId,
+                userEmail = user.userEmail,
+                role = user.role.name
+            )
+        )
     }
 
     override fun withdraw(userEamil: String, request: WithdrawRequest) {
