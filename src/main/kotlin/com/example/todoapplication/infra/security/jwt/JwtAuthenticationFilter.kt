@@ -1,17 +1,19 @@
 package com.example.todoapplication.infra.security.jwt
 
+import com.example.todoapplication.infra.security.UserPrincipal
 import jakarta.servlet.FilterChain
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
-import org.apache.tomcat.util.net.openssl.ciphers.Authentication
 import org.springframework.http.HttpHeaders
+import org.springframework.security.core.context.SecurityContextHolder
+import org.springframework.security.web.authentication.WebAuthenticationDetailsSource
 import org.springframework.stereotype.Component
 import org.springframework.web.filter.OncePerRequestFilter
 
 @Component
 class JwtAuthenticationFilter(
     private val jwtPlugin: JwtPlugin
-): OncePerRequestFilter() {
+) : OncePerRequestFilter() {
 
     companion object {
         private val BEARER_PATTERN = Regex("^Bearer (.+?)$")
@@ -27,14 +29,24 @@ class JwtAuthenticationFilter(
         if (jwt != null) {
             jwtPlugin.validateToken(jwt)
                 .onSuccess {
-                    val userId = it.payload?.subject?.toLong() ?: 0L
-                    val role = it.payload?.get("role", String::class.java) ?: ""
-                    val userEmail = it.payload?.get("userEmail", String::class.java) ?: ""
-                    val authentication: Authentication
+                    val userId = it.payload.subject.toLong()
+                    val userEmail = it.payload.get("userEmail", String::class.java)
+                    val role = it.payload.get("role", String::class.java)
 
-                    // payload 지원중단이라고 떠서 쓸수가 없음...
+                    val principal = UserPrincipal(
+                        userId = userId,
+                        userEmail = userEmail,
+                        role = setOf(role)
+                    )
+                    val authentication = JitAuthenticationToken(
+                        principal = principal,
+                        details = WebAuthenticationDetailsSource().buildDetails(request)
+                    )
+
+                    SecurityContextHolder.getContext().authentication = authentication
                 }
         }
+        filterChain.doFilter(request, response)
     }
 
     private fun HttpServletRequest.getBearerToken(): String? {

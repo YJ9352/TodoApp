@@ -10,6 +10,6 @@ data class TodoWithCommentResponse(
     val title: String,
     val detail: String?,
     val dateCreated: LocalDateTime,
-    val status: TodoStatus,
+    val status: String,
     val comments: List<CommentResponse>
 )

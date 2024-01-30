@@ -45,15 +45,22 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 //	implementation("com.h2database:h2")
 
-	annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
-	testImplementation("org.springframework.boot:spring-boot-starter-test")
+	// validation
+	implementation("org.springframework.boot:spring-boot-starter-validation")
 
+	// security
 	implementation("org.springframework.boot:spring-boot-starter-security")
-	implementation("io.jsonwebtoken:jjwt-api:0.12.3")
+	implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
+	implementation("org.thymeleaf.extras:thymeleaf-extras-springsecurity6")
+	testImplementation("org.springframework.boot:spring-boot-starter-test")
+	annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
 
+	// JWT
+	implementation("io.jsonwebtoken:jjwt-api:0.12.3")
 	runtimeOnly("io.jsonwebtoken:jjwt-impl:0.12.3")
 	runtimeOnly("io.jsonwebtoken:jjwt-jackson:0.12.3")
 
+	// postgres
 	runtimeOnly("org.postgresql:postgresql")
 }
 

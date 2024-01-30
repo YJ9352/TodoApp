@@ -38,6 +38,6 @@ fun UserEntity.toUserResponse(): UserResponse {
         userEmail = userEmail,
         userPassword = userPassword,
         userName = userName,
-        role = role,
+        role = role.name,
     )
 }

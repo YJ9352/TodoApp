@@ -7,5 +7,5 @@ data class UserUpdateRequest(
     val userPassword: String,
     val newUserPassword: String,
     val userName: String,
-    val role: UserRole,
+    val role: String,
 )
