@@ -1,6 +1,5 @@
 package com.example.todoapplication.domain.todo.dto.response
 
-import com.example.todoapplication.domain.todo.common.TodoStatus
 import java.time.LocalDateTime
 
 data class TodoResponse(
