@@ -1,5 +1,6 @@
 package com.example.todoapplication.domain.user.service
 
+import com.example.todoapplication.domain.exception.UserInformationNotFoundException
 import com.example.todoapplication.domain.user.common.UserRole
 import com.example.todoapplication.domain.user.dto.request.SignInRequest
 import com.example.todoapplication.domain.user.dto.request.SignUpRequest
@@ -25,12 +26,15 @@ class UserServiceImpl(
 
     @Transactional
     override fun signUp(userEamil: String, request: SignUpRequest): UserResponse {
-        userRepository.findByUserEmail(userEamil)?.let { throw IllegalStateException("Email is already in use") }
+        val user = userRepository.findByUserEmail(userEamil)
+            ?.let { throw UserInformationNotFoundException(userEamil, "이미 동일한 이메일로 계정이 있는 것 같습니다") }
 
         return userRepository.save(
             UserEntity(
                 userEmail = request.userEmail,
-                userPassword = passwordEncoder.encode(request.userPassword),
+                userPassword =
+                if (request.userPassword == request.newUserPassword) passwordEncoder.encode(request.userPassword)
+                else throw UserInformationNotFoundException(request.userPassword, "비밀번호 확인이 일치하지 않는 것 같습니다") ,
                 userName = request.userName,
                 role = UserRole.USER,
             )
@@ -41,11 +45,11 @@ class UserServiceImpl(
     override fun signIn(request: SignInRequest): SignInResponse {
         val user = userRepository.findByUserEmail(request.userEmail)
             ?.takeIf { passwordEncoder.matches(request.userPassword, it.userPassword) }
-            ?: throw IllegalArgumentException("아이디 또는 비밀번호가 일치하지 않습니다.")
+            ?: throw UserInformationNotFoundException(request.userPassword, "기존 비밀번호 및 이메일이 일치하지 않습니다")
 
         return SignInResponse(
             accessToken = jwtPlugin.generateAccessToken(
-                userId = user.userId,
+                userId = user.userId!!,
                 userEmail = user.userEmail,
                 role = user.role.name
             )
@@ -55,7 +59,7 @@ class UserServiceImpl(
     override fun withdraw(userEamil: String, request: WithdrawRequest) {
         val userPass = userRepository.findByUserEmail(userEamil)
             ?.takeIf { passwordEncoder.matches(request.userPassword, it.userPassword) }
-            ?: throw IllegalArgumentException("비밀번호가 일치하지 않습니다.")
+            ?: throw UserInformationNotFoundException(request.userPassword, "기존 비밀번호가 일치하지 않습니다")
 
         userRepository.delete(userPass)
     }
@@ -64,7 +68,7 @@ class UserServiceImpl(
     override fun userUpdate(userEamil: String, request: UserUpdateRequest): UserUpdateResponse {
         val user = userRepository.findByUserEmail(userEamil)
             ?.takeIf { passwordEncoder.matches(request.userPassword, it.userPassword) }
-            ?: throw IllegalArgumentException("비밀번호가 일치하지 않습니다.")
+            ?: throw UserInformationNotFoundException(request.userPassword, "기존 비밀번호가 일치하지 않습니다")
 
         user.userName = request.userName
 

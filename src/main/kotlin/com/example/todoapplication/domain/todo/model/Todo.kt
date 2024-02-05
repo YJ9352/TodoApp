@@ -39,13 +39,13 @@ class Todo(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "todoid")
-    val todoId: Long = 0L
+    val todoId: Long? = null
 
 }
 
 fun Todo.toTodoResponse(): TodoResponse {
     return TodoResponse(
-        todoId = todoId,
+        todoId = todoId!!,
         userName = userName,
         title = title,
         detail = detail,

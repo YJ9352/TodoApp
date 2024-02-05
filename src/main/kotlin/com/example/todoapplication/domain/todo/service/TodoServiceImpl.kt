@@ -40,7 +40,7 @@ class TodoServiceImpl(
         user.comments.addAll(comments)
 
         return TodoWithCommentResponse(
-            todoId = user.todoId,
+            todoId = user.todoId!!,
             userName = user.userName,
             title = user.title,
             detail = user.detail,

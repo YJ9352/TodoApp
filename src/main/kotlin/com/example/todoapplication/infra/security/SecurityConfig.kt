@@ -25,13 +25,12 @@ class SecurityConfig(
             .csrf { it.disable() }
             .authorizeHttpRequests {
 
-                it.requestMatchers(AntPathRequestMatcher("/users")).permitAll()
-                it.requestMatchers(AntPathRequestMatcher("/users/signup")).permitAll()
-                it.requestMatchers(AntPathRequestMatcher("/users/signin")).permitAll()
+                it.requestMatchers(AntPathRequestMatcher("/api/users")).permitAll()
+                it.requestMatchers(AntPathRequestMatcher("/api/users/signup")).permitAll()
+                it.requestMatchers(AntPathRequestMatcher("/api/users/signin")).permitAll()
                 it.requestMatchers(AntPathRequestMatcher("/swagger-ui/**")).permitAll()
                 it.requestMatchers(AntPathRequestMatcher("/v3/api-docs/**")).permitAll()
-
-                it.anyRequest().authenticated()
+                    .anyRequest().authenticated()
             }
             .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter::class.java)
             .exceptionHandling {

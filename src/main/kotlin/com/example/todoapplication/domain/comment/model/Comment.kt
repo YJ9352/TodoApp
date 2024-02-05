@@ -25,14 +25,14 @@ class Comment(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "commentid")
-    var commentId: Long = 0L
+    var commentId: Long? = null
 }
 
 fun Comment.toCommentResponse(): CommentResponse {
     return CommentResponse(
-        userId = user.userId,
-        todoId = todo.todoId,
-        commentId = commentId,
+        userId = user.userId!!,
+        todoId = todo.todoId!!,
+        commentId = commentId!!,
         commentDetail = commentDetail
     )
 }

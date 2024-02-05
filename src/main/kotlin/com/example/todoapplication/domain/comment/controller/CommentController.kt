@@ -37,9 +37,7 @@ class CommentController(
         @PathVariable todoId: Long,
         @PathVariable commentId: Long
     ): ResponseEntity<CommentResponse> {
-        return ResponseEntity
-            .status(HttpStatus.OK)
-            .body(commentService.getCommentById(commentId))
+        return ResponseEntity.status(HttpStatus.OK).body(commentService.getCommentById(commentId))
     }
 
     // 댓글 작성
@@ -49,9 +47,7 @@ class CommentController(
         @RequestHeader("userid") userId: Long,
         @RequestBody request: CommentRequest
     ): ResponseEntity<CommentResponse> {
-        return ResponseEntity
-            .status(HttpStatus.CREATED)
-            .body(commentService.createComment(todoId, userId, request))
+        return ResponseEntity.status(HttpStatus.CREATED).body(commentService.createComment(todoId, userId, request))
     }
 
     // 댓글 수정
@@ -62,9 +58,7 @@ class CommentController(
         @RequestHeader("userId") userId: Long,
         @RequestBody request: CommentRequest
     ): ResponseEntity<CommentResponse> {
-        return ResponseEntity
-            .status(HttpStatus.OK)
-            .body(commentService.updateComment(commentId, todoId, userId, request))
+        return ResponseEntity.status(HttpStatus.OK).body(commentService.updateComment(commentId, todoId, userId, request))
     }
 
     // 댓글 삭제
@@ -76,8 +70,6 @@ class CommentController(
         @RequestBody request: CommentRequest
     ): ResponseEntity<Unit> {
         commentService.deleteComment(commentId)
-        return ResponseEntity
-            .status(HttpStatus.NO_CONTENT)
-            .build()
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build()
     }
 }
