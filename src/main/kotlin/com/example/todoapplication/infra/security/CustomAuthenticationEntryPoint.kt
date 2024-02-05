@@ -1,4 +1,4 @@
-package com.example.todoapplication.infra.security.jwt
+package com.example.todoapplication.infra.security
 
 import com.example.todoapplication.domain.exception.dto.ErrorResponse
 import com.fasterxml.jackson.databind.ObjectMapper

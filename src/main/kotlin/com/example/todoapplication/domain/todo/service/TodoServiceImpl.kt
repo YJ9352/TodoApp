@@ -45,7 +45,7 @@ class TodoServiceImpl(
             title = user.title,
             detail = user.detail,
             dateCreated = user.dateCreated,
-            status = user.status,
+            status = user.status.name,
             comments = comments.map { it.toCommentResponse() }
         )
     }

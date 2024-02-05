@@ -39,7 +39,7 @@ class Todo(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "todoid")
-    val todoId: Long = 0
+    val todoId: Long = 0L
 
 }
 
@@ -50,6 +50,6 @@ fun Todo.toTodoResponse(): TodoResponse {
         title = title,
         detail = detail,
         dateCreated = dateCreated,
-        status = status,
+        status = status.name,
     )
 }
