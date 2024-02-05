@@ -11,13 +11,13 @@ interface TodoService {
     fun getAllTodoList(): List<TodoResponse>
 
     // 투두리스트 개별조회
-    fun getTodoById(userId: Long): TodoWithCommentResponse
+    fun getTodoById(todoId: Long): TodoWithCommentResponse
 
     // 투두리스트 작성
     fun createTodo(request: CreateTodoRequest): TodoResponse
 
     // 투두리스트 수정
-    fun updateTodo(todoId: Long, request: UpdateTodoRequest): TodoResponse
+    fun updateTodo(userId: Long, todoId: Long, request: UpdateTodoRequest): TodoResponse
 
     // 투두리스트 삭제
     fun deleteTodo(todoId: Long)

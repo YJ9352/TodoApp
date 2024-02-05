@@ -1,8 +1,10 @@
 package com.example.todoapplication.domain.todo.model
 
 import com.example.todoapplication.domain.comment.model.Comment
+import com.example.todoapplication.domain.comment.model.toCommentResponse
 import com.example.todoapplication.domain.todo.common.TodoStatus
 import com.example.todoapplication.domain.todo.dto.response.TodoResponse
+import com.example.todoapplication.domain.todo.dto.response.TodoWithCommentResponse
 import com.example.todoapplication.domain.user.model.UserEntity
 import jakarta.persistence.*
 import java.time.LocalDateTime
@@ -51,5 +53,17 @@ fun Todo.toTodoResponse(): TodoResponse {
         detail = detail,
         dateCreated = dateCreated,
         status = status.name,
+    )
+}
+
+fun Todo.toTodoWithCommentResponse(): TodoWithCommentResponse {
+    return TodoWithCommentResponse(
+        todoId = todoId!!,
+        userName = userName,
+        title = title,
+        detail = detail,
+        dateCreated = dateCreated,
+        status = status.name,
+        comments = comments.map { it.toCommentResponse() }
     )
 }

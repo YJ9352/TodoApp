@@ -25,6 +25,16 @@ class UserServiceImpl(
 ) : UserService {
 
     @Transactional
+    override fun emailCheck(userEamil: String) {
+        val user = userRepository.findByUserEmail(userEamil)
+        if (user != null) {
+            throw UserInformationNotFoundException(userEamil, "이미 동일한 이메일로 계정이 있는 것 같습니다")
+        } else {
+            throw UserInformationNotFoundException(userEamil, "은 가입된 이메일이 아닙니다.")
+        }
+    }
+
+    @Transactional
     override fun signUp(userEamil: String, request: SignUpRequest): UserResponse {
         val user = userRepository.findByUserEmail(userEamil)
             ?.let { throw UserInformationNotFoundException(userEamil, "이미 동일한 이메일로 계정이 있는 것 같습니다") }

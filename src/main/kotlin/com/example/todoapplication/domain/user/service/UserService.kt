@@ -10,6 +10,8 @@ import com.example.todoapplication.domain.user.dto.response.UserUpdateResponse
 
 interface UserService {
 
+    fun emailCheck(userEamil: String)
+
     fun signUp(userEamil: String, request: SignUpRequest): UserResponse
 
     fun signIn(request: SignInRequest): SignInResponse
