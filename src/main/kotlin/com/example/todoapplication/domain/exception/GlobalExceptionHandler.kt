@@ -18,4 +18,9 @@ class GlobalExceptionHandler {
     fun userInformationNotFoundException(e: UserInformationNotFoundException): ResponseEntity<ErrorResponse> {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ErrorResponse(message = e.message))
     }
+
+    @ExceptionHandler(RegexException::class)
+    fun regexException(e: RegexException): ResponseEntity<ErrorResponse> {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ErrorResponse(message = e.message))
+    }
 }
