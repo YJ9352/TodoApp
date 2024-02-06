@@ -20,4 +20,15 @@ class RegexFunc {
         if (!Pattern.matches(pass, userPassword))
             throw RegexException(userPassword, "비밀번호 형식이 올바르지 않습니다.") else return userPassword
     }
+
+    // 제목
+    fun regexTitle(usertitle: String): String {
+        val title = "^[\\s\\S]{1,500}\$"
+        if (!Pattern.matches(title, usertitle)) throw RegexException(title, "글자수는 1~500 사이로 작성해주세요.") else return usertitle
+    }
+
+    fun regexDetail(userDetail: String?): String? {
+        val detail = "^[\\s\\S]{1,5000}\$"
+        if (!Pattern.matches(detail, userDetail)) throw RegexException(detail, "글자수는 1~5000 사이로 작성해주세요.") else return userDetail
+    }
 }

@@ -31,10 +31,10 @@ class TodoController(
 
     // 글 작성
     @PostMapping
-    fun createTodo(@RequestBody createTodoRequest: CreateTodoRequest): ResponseEntity<TodoResponse> {
+    fun createTodo(userId: Long, @RequestBody createTodoRequest: CreateTodoRequest): ResponseEntity<TodoResponse> {
         return ResponseEntity
             .status(HttpStatus.CREATED)
-            .body(todoService.createTodo(createTodoRequest))
+            .body(todoService.createTodo(userId, createTodoRequest))
     }
 
     // 글 수정

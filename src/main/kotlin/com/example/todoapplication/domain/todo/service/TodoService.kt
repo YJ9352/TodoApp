@@ -14,7 +14,7 @@ interface TodoService {
     fun getTodoById(todoId: Long): TodoWithCommentResponse
 
     // 투두리스트 작성
-    fun createTodo(request: CreateTodoRequest): TodoResponse
+    fun createTodo(userId: Long, request: CreateTodoRequest): TodoResponse
 
     // 투두리스트 수정
     fun updateTodo(userId: Long, todoId: Long, request: UpdateTodoRequest): TodoResponse

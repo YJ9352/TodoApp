@@ -13,6 +13,7 @@ import com.example.todoapplication.domain.todo.model.toTodoResponse
 import com.example.todoapplication.domain.todo.model.toTodoWithCommentResponse
 import com.example.todoapplication.domain.todo.repository.TodoRepository
 import com.example.todoapplication.domain.user.repository.UserRepository
+import com.example.todoapplication.infra.regex.RegexFunc
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -22,7 +23,8 @@ import java.time.LocalDateTime
 class TodoServiceImpl(
     private val todoRepository: TodoRepository,
     private val commentRepository: CommentRepository,
-    private val userRepository: UserRepository
+    private val userRepository: UserRepository,
+    private val regexFunc: RegexFunc
 ): TodoService {
 
     // 투두 리스트 전체조회(내림차순)
@@ -44,14 +46,14 @@ class TodoServiceImpl(
 
     // 투두리스트 작성
     @Transactional
-    override fun createTodo(request: CreateTodoRequest): TodoResponse {
-        val user = userRepository.findByUserId(request.userId) ?: throw ModelNotFoundException(request.userId)
+    override fun createTodo(userId: Long, request: CreateTodoRequest): TodoResponse {
+        val user = userRepository.findByUserId(userId) ?: throw ModelNotFoundException(userId)
 
         return todoRepository.save(
             Todo(
-                userName = request.userName,
-                title = request.title,
-                detail = request.detail,
+                userName = user.userName,
+                title = regexFunc.regexTitle(request.title),
+                detail = regexFunc.regexDetail(request.detail),
                 dateCreated = LocalDateTime.now(),
                 status = TodoStatus.FALSE,
                 user = user
@@ -67,8 +69,8 @@ class TodoServiceImpl(
             val (userName, title, detail) = request
 
             todo.userName = userName
-            todo.title = title
-            todo.detail = detail
+            todo.title = regexFunc.regexTitle(title)
+            todo.detail = regexFunc.regexDetail(detail)
 
             return todoRepository.save(todo).toTodoResponse()
         } else {
