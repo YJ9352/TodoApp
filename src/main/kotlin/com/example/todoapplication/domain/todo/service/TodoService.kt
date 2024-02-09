@@ -17,11 +17,11 @@ interface TodoService {
     fun createTodo(userId: Long, request: CreateTodoRequest): TodoResponse
 
     // 투두리스트 수정
-    fun updateTodo(userId: Long, todoId: Long, request: UpdateTodoRequest): TodoResponse
+    fun updateTodo(todoId: Long, userId: Long, request: UpdateTodoRequest): TodoResponse
 
     // 투두리스트 삭제
-    fun deleteTodo(todoId: Long)
+    fun deleteTodo(todoId: Long, userId: Long)
 
     // 투두리스트 상태완료
-    fun updateStatus(todoId: Long): TodoResponse
+    fun updateStatus(todoId: Long, userId: Long): TodoResponse
 }

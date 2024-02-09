@@ -63,12 +63,12 @@ class TodoServiceImpl(
 
     // 투두리스트 수정
     @Transactional
-    override fun updateTodo(userId: Long, todoId: Long, request: UpdateTodoRequest): TodoResponse {
+    override fun updateTodo(todoId: Long, userId: Long, request: UpdateTodoRequest): TodoResponse {
         val todo = todoRepository.findByIdOrNull(todoId) ?: throw ModelNotFoundException(todoId)
-        if (todo.user.userId == userId) {
-            val (userName, title, detail) = request
+        val user = userRepository.findByUserId(userId) ?: throw ModelNotFoundException(userId)
+        if (todo.user.userId == user.userId) {
+            val (title, detail) = request
 
-            todo.userName = userName
             todo.title = regexFunc.regexTitle(title)
             todo.detail = regexFunc.regexDetail(detail)
 
@@ -80,18 +80,25 @@ class TodoServiceImpl(
 
     // 투두리스트 삭제
     @Transactional
-    override fun deleteTodo(todoId: Long) {
+    override fun deleteTodo(todoId: Long, userId: Long) {
         val todo = todoRepository.findByIdOrNull(todoId) ?: throw ModelNotFoundException(todoId)
-        todoRepository.delete(todo)
+        val user = userRepository.findByUserId(userId) ?: throw ModelNotFoundException(userId)
+        if (todo.user.userId == user.userId) todoRepository.delete(todo) else throw ModelNotFoundException(todoId)
     }
 
     // 할일 완료처리 여부 (기본값 FALSE)
     // status가 FALSE면 실행시 TRUE로 변경, TRUE면 FALSE로 변경 가능하게 수정
     @Transactional
-    override fun updateStatus(todoId: Long): TodoResponse {
+    override fun updateStatus(todoId: Long, userId: Long): TodoResponse {
         val todo = todoRepository.findByIdOrNull(todoId) ?: throw ModelNotFoundException(todoId)
-        todo.status = if (todo.status == TodoStatus.FALSE) TodoStatus.TRUE else TodoStatus.FALSE
+        val user = userRepository.findByUserId(userId) ?: throw ModelNotFoundException(userId)
 
-        return todoRepository.save(todo).toTodoResponse()
+        if (todo.user.userId == user.userId) {
+            todo.status = if (todo.status == TodoStatus.FALSE) TodoStatus.TRUE else TodoStatus.FALSE
+
+            return todoRepository.save(todo).toTodoResponse()
+        } else {
+            throw ModelNotFoundException(userId)
+        }
     }
 }

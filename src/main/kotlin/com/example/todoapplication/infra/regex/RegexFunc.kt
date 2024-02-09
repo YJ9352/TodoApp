@@ -27,8 +27,15 @@ class RegexFunc {
         if (!Pattern.matches(title, usertitle)) throw RegexException(title, "글자수는 1~500 사이로 작성해주세요.") else return usertitle
     }
 
+    // 내용
     fun regexDetail(userDetail: String?): String? {
         val detail = "^[\\s\\S]{1,5000}\$"
         if (!Pattern.matches(detail, userDetail)) throw RegexException(detail, "글자수는 1~5000 사이로 작성해주세요.") else return userDetail
+    }
+
+    // 댓글 내용
+    fun regexCommentDetail(commentDetail: String): String {
+        val detail = "^[\\s\\S]{1,1000}\$"
+        if (!Pattern.matches(detail, commentDetail)) throw RegexException(detail, "글자수는 1~1000 사이로 작성해주세요.") else return commentDetail
     }
 }

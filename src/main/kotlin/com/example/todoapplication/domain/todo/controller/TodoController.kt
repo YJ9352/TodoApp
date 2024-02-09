@@ -31,36 +31,41 @@ class TodoController(
 
     // 글 작성
     @PostMapping
-    fun createTodo(userId: Long, @RequestBody createTodoRequest: CreateTodoRequest): ResponseEntity<TodoResponse> {
+    fun createTodo(
+        @AuthenticationPrincipal userPrincipal: UserPrincipal,
+        @RequestBody createTodoRequest: CreateTodoRequest
+    ): ResponseEntity<TodoResponse> {
         return ResponseEntity
             .status(HttpStatus.CREATED)
-            .body(todoService.createTodo(userId, createTodoRequest))
+            .body(todoService.createTodo(userPrincipal.userId, createTodoRequest))
     }
 
     // 글 수정
     @PutMapping("/{todoId}")
     fun updateTodo(
-        @AuthenticationPrincipal userPrincipal: UserPrincipal,
         @PathVariable todoId: Long,
+        @AuthenticationPrincipal userPrincipal: UserPrincipal,
         @RequestBody updateTodoRequest: UpdateTodoRequest
     ): ResponseEntity<TodoResponse> {
-        return ResponseEntity.status(HttpStatus.OK).body(todoService.updateTodo(userPrincipal.userId, todoId, updateTodoRequest))
+        return ResponseEntity.status(HttpStatus.OK).body(todoService.updateTodo(todoId, userPrincipal.userId, updateTodoRequest))
     }
 
     // 삭제
     @DeleteMapping("/{todoId}")
-    fun deleteTodo(@PathVariable todoId: Long): ResponseEntity<Unit> {
-        todoService.deleteTodo(todoId)
-        return ResponseEntity
-            .status(HttpStatus.NO_CONTENT)
-            .build()
+    fun deleteTodo(
+        @PathVariable todoId: Long,
+        @AuthenticationPrincipal userPrincipal: UserPrincipal
+    ): ResponseEntity<Unit> {
+        todoService.deleteTodo(todoId, userPrincipal.userId)
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build()
     }
 
     // 할일 완료처리 여부
     @PatchMapping("/{todoId}")
-    fun updateStatus(@PathVariable todoId: Long): ResponseEntity<TodoResponse> {
-        return ResponseEntity
-            .status(HttpStatus.OK)
-            .body(todoService.updateStatus(todoId))
+    fun updateStatus(
+        @PathVariable todoId: Long,
+        @AuthenticationPrincipal userPrincipal: UserPrincipal
+    ): ResponseEntity<TodoResponse> {
+        return ResponseEntity.status(HttpStatus.OK).body(todoService.updateStatus(todoId, userPrincipal.userId))
     }
 }
