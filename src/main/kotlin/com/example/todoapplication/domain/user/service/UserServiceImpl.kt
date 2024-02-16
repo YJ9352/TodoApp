@@ -96,4 +96,10 @@ class UserServiceImpl(
 
         return UserUpdateResponse(user.userEmail, user.userName)
     }
+
+
+    // querydsl 검색 : 유저이름 test
+    override fun searchUserList(userName: String): List<UserResponse> {
+        return userRepository.searchUserListByName(userName).map { it.toUserResponse() }
+    }
 }

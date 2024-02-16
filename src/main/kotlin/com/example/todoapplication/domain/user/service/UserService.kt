@@ -19,4 +19,6 @@ interface UserService {
     fun withdraw(userEamil: String, request: WithdrawRequest)
 
     fun userUpdate(userEamil: String, request: UserUpdateRequest): UserUpdateResponse
+
+    fun searchUserList(userName: String): List<UserResponse>
 }
